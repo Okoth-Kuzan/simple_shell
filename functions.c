@@ -12,7 +12,12 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
-
+/**
+ * _printstring - prints a string
+ * @str: string to print
+ *
+ * Return: 0 (success)
+ */
 int _printstring(char *str)
 {
 	int i = 0, count = 0;
