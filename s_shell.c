@@ -99,5 +99,4 @@ void execute_command(char *command, char *args[])
             waitpid(pid, &status, WUNTRACED);
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
-}
-	
+}	
