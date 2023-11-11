@@ -1,11 +1,22 @@
 #include "shell.h"
+#include <stdio.h>
+
+/**
+ * compare_entries - Modifies a pointer.
+ *
+ * @a: retrieves file a
+ * @b: retrieves file b
+ *
+ * Return: Always 0.
+ */
 
 int compare_entries(const struct dirent **a, const struct dirent **b)
 {
 	int cmp = strcasecmp((*a)->d_name, (*b)->d_name);
+
 	if (cmp != 0)
 	{
-		return cmp;
+		return (cmp);
 	}
 	else
 	{
@@ -15,9 +26,17 @@ int compare_entries(const struct dirent **a, const struct dirent **b)
 
 void execute_command(char *command, char *args[]);
 
+/**
+ * main - checks the code
+ *
+ *
+ * Return: Always 0.
+ */
+
 int main(void)
 {
 	char input[MAX_COMMAND_LENGTH];
+
 	while (1)
 	{
 		write(STDOUT_FILENO, "simple_shell$ ", 14);
@@ -45,6 +64,7 @@ int main(void)
 		else if (strncmp(input, "cd", 2) == 0)
 		{
 			char *arg = input + 3;
+
 			if (chdir(arg) != 0)
 			{
 				perror("chdir");
@@ -55,11 +75,13 @@ int main(void)
 			char *token = strtok(input, " ");
 			char *command = token;
 			char *args[MAX_ARGS];
-			
+
 			int arg_count = 0;
+
 			while (token != NULL && arg_count < MAX_ARGS - 1)
 			{
 				token = strtok(NULL, " ");
+
 				if (token != NULL)
 				{
 					args[arg_count] = token;
@@ -74,11 +96,22 @@ int main(void)
 	return (0);
 }
 
+/**
+ * execute_command : Exectues a command and arg
+ *
+ * @command: writes defined fucntion
+ *
+ * @args: returns arg
+ * Return 1
+ *
+ */
+
 void execute_command(char *command, char *args[])
 {
 	pid_t pid;
+
 	int status;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -95,8 +128,13 @@ void execute_command(char *command, char *args[])
 	}
 	else
 	{
-        do {
-            waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
-}	
+	do {
+	waitpid(pid, &status, WUNTRACED);
+	}
+
+	while {
+	(!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+
+	}
+}
