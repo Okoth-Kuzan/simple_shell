@@ -1,30 +1,17 @@
-#include "shell.h"
-
-/**
- * _putchar - writes the character c to stdout
- *@c:The character to print
- *
- * Return: on success 1.
- * On error, -1 is returned and erno is set appropriately
- */
+#include "main.h"
 
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+        return (write(STDOUT_FILENO, &c, 1));
 }
-/**
- * _printstring - prints a string
- * @str: string to print
- *
- * Return: 0 (success)
- */
+
 int _printstring(char *str)
 {
-	int i = 0, count = 0;
+        int i = 0, count = 0;
 
-	while (str[i])
-	{
-		count += _putchar(str[i++]);
-	}
-	return (count);
+        while (str[i])
+        {
+                count += _putchar(str[i++]);
+        }
+        return (count);
 }
