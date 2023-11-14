@@ -18,6 +18,10 @@ int main(void)
 
 		read_result = getline(&input, &input_size, stdin);
 
+		_printstring(" ");
+		_printstring(input);
+		_putchar('\n');
+
 		if (read_result == -1)
 		{
 			if (feof(stdin))
@@ -39,10 +43,6 @@ int main(void)
 			free(input);
 			break;
 		}
-		_printstring(" ");
-		_printstring(input);
-		_putchar('\n');
-
 		free(input);
 		input = NULL;
 		input_size = 0;

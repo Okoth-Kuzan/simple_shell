@@ -30,6 +30,7 @@ void execute_command(char *command, char *environ[])
 		if (execve(command, args, environ) == -1)
 		{
 			perror("Error executing command");
+			_printstring("Invalid command.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
