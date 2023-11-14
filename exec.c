@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * execute_command - Forks a new process
+ * and executes a specified command within it.
+ *
+ * @command: command (path to an executable) to be executed.
+ * @environ: array of environment variables passed to executed command.
+ */
+
 void execute_command(char *command, char *environ[])
 {
 	pid_t pid = fork();
@@ -16,14 +24,14 @@ void execute_command(char *command, char *environ[])
 		_printstring(command);
 		_putchar('\n');
 
-		 args[0] = command;
-		 args[1] = NULL;
+		args[0] = command;
+		args[1] = NULL;
 
-		 if (execve(command, args, environ) == -1)
-		 {
-			 perror("Error executing command");
-			 exit(EXIT_FAILURE);
-		 }
+		if (execve(command, args, environ) == -1)
+		{
+			perror("Error executing command");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{

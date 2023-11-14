@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - entrypoint
+ *
+ * Return: 0 (success)
+ */
+
 int main(void)
 {
 	char *input = NULL;
