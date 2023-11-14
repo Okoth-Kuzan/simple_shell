@@ -1,23 +1,24 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * _putchar - writes the character c to stdout
- *@c:The character to print
+ * _putchar - Writes a single character to the standard output.
  *
- * Return: on success 1.
- * On error, -1 is returned and erno is set appropriately
+ * @c: The character to be written.
+ * Return: number of characters written (1 if successful, -1 on failure).
  */
 
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	return (write(STDOUT_FILENO, &c, 1));
 }
+
 /**
- * _printstring - prints a string
- * @str: string to print
+ * _printstring - Prints a string to the standard output.
  *
- * Return: 0 (success)
+ * @str: pointer to the null-terminated string to be printed.
+ * Return: The total number of characters printed.
  */
+
 int _printstring(char *str)
 {
 	int i = 0, count = 0;
