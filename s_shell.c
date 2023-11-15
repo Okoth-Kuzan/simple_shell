@@ -1,52 +1,33 @@
 #include "main.h"
 
-/**
- * main - entrypoint
- *
- * Return: 0 (success)
- */
-
 int main(void)
 {
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t read_result;
+	char *token = NULL;
+	char input[MAX_INPUT_SIZE];
+	char *args[MAX_INPUT_SIZE / 2 + 1];
+	int i = 0;
+	int should_run = 1;
 
-	while (1)
+	while (should_run)
 	{
-		_printstring("simple_shell> ");
+		write(STDOUT_FILENO, "Shell> ", 7);
 
-		read_result = getline(&input, &input_size, stdin);
-
-		_printstring(" ");
-		_printstring(input);
-		_putchar('\n');
-
-		if (read_result == -1)
+		if (fgets(input, MAX_INPUT_SIZE, stdin) == NULL)
 		{
-			if (feof(stdin))
-			{
-				_printstring("\n");
-				break;
-			}
-			else
-			{
-				perror("Error reading input");
-				exit(EXIT_FAILURE);
-			}
-		}
-
-		input[strcspn(input, "\n")] = 0;
-
-		if (strcmp(input, "exit") == 0)
-		{
-			free(input);
+			write(STDOUT_FILENO, "\nExiting the shell.\n", 20);
 			break;
 		}
-		free(input);
-		input = NULL;
-		input_size = 0;
+		input[strcspn(input, "\n")] = 0;
 
+		for (token = strtok(input, " "); token != NULL; token = strtok(NULL, " "))
+		{
+			args[i++] = token;
+		}
+		args[i] = NULL;
+
+		execute_command(args);
+
+		execute_builtin(args);
 	}
 	return (0);
 }

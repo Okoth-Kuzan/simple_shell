@@ -1,54 +1,44 @@
 #include "main.h"
 
-/**
- * execute_command - Forks a new process
- * and executes a specified command within it.
- *
- * @command: command (path to an executable) to be executed.
- * @environ: array of environment variables passed to executed command.
- */
-
-void execute_command(char *command, char *environ[])
+char *find_command_path(const char *command)
 {
-	pid_t pid = fork();
-	char *args[2];
+	char *path_env = getenv("PATH");
+	char *path_copy = strdup(path_env);
+	char *token = strtok(path_copy, ":");
+	char *full_path = NULL;
 
-	if (pid < 0)
+	if (path_env == NULL)
 	{
-		perror("Fork failed");
+		write(STDERR_FILENO, "PATH environment variable not set.\n", 36);
 		exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
+
+	if (path_copy == NULL)
 	{
-		_printstring("Child process executing: ");
-		_printstring(command);
-		_putchar('\n');
+		write(STDERR_FILENO, "Memory allocation failed.\n", 26);
+		exit(EXIT_FAILURE);
+	}
 
-		args[0] = command;
-		args[1] = NULL;
-
-		if (execve(command, args, environ) == -1)
+	while (token != NULL)
+	{
+		full_path = malloc(strlen(token) + strlen(command) + 2);
+		if (full_path == NULL)
 		{
-			perror("Error executing command");
-			_printstring("Invalid command.\n");
+			write(STDERR_FILENO, "Memory allocation failed.\n", 26);
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-	{
-		int status;
+		sprintf(full_path, "%s/%s", token, command);
 
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
+		if (access(full_path, F_OK) == 0)
 		{
-			_printstring("Child process exited with status: ");
-			printf("%d\n", WEXITSTATUS(status));
+			free(path_copy);
+			return (full_path);
 		}
-		else if (WIFSIGNALED(status))
-		{
-			_printstring("Child process terminated by signal: ");
-			printf("%d\n", WTERMSIG(status));
-		}
+		free(full_path);
+		token = strtok(NULL, ":");
 	}
+	free(path_copy);
+
+	return (NULL);
 }
 

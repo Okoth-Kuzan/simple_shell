@@ -1,15 +1,20 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int _putchar(char c);
-int _printstring(char *str);
-void execute_command(char *command, char *environ[]);
+#define MAX_INPUT_SIZE 1024
+
+extern char **environ;
+
+int run_shell();
+void execute_command(char *args[]);
+void execute_builtin(char *args[]);
+char *find_command_path(const char *command);
 
 #endif
