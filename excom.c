@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * execute_command - executes command.
+ * args: Command execution failed 
+ *
+ * Return: 0
+ */
+
 void execute_command(char *args[])
 {
 	char *command_path = find_command_path(args[0]);
@@ -24,6 +31,7 @@ void execute_command(char *args[])
 		else
 		{
 			int status;
+
 			waitpid(pid, &status, 0);
 
 			if (status != 0)
