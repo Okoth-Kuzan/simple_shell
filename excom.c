@@ -1,8 +1,7 @@
 #include "main.h"
 
 /**
- * execute_command - executes command.
- * args: Command execution failed 
+ * execute_command - command execution failed  
  *
  * Return: 0
  */
