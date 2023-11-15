@@ -13,6 +13,7 @@ int main(void)
 	char *token = strtok(input, " ");
 	int i = 0;
 	int should_run = 1;
+	pid_t pid = fork();
 
 	while (should_run)
 	{
@@ -39,7 +40,25 @@ int main(void)
 		}
 		args[i] = NULL;
 
-		execute_command(args);
+		if (pid < 0)
+		{
+			perror("Fork failed");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
+		{
+			if (execve(args[0], args, environ) == -1)
+			{
+				perror("execve failed");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			int status;
+
+			waitpid(pid, &status, 0);
+		}
 	}
 	return (0);
 }
