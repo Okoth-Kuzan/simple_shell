@@ -1,7 +1,6 @@
 #include "main.h"
 
 /**
- * execute_command - command execution failed.
  * execute_command - executes a command in a new process.
  *
  * @args: array of strings representing the command and its arguments.
@@ -23,6 +22,7 @@ void execute_command(char *args[])
 		{
 			if (execve(command_path, args, environ) == -1)
 			{
+				perror("execve");
 				write(STDERR_FILENO, "Command execution failed.\n", 26);
 				_exit(EXIT_FAILURE);
 			}

@@ -47,6 +47,8 @@ char *find_command_path(const char *command)
 	}
 	free(path_copy);
 
+	fprintf(stderr, "Command not found: %s\n", command);
+
 	return (NULL);
 }
 

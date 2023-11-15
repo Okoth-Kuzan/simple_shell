@@ -8,11 +8,14 @@
 
 int main(void)
 {
+	char *path_env = getenv("PATH");
 	char *token = NULL;
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_INPUT_SIZE / 2 + 1];
 	int i = 0;
 	int should_run = 1;
+
+	fprintf(stderr, "PATH: %s\n", path_env);
 
 	while (should_run)
 	{
@@ -31,7 +34,12 @@ int main(void)
 		}
 		args[i] = NULL;
 
-		execute_command(args);
+		if (args[0] != NULL)
+		{
+			fprintf(stderr, "Executing command: %s\n", args[0]);
+
+			execute_command(args);
+		}
 	}
 
 	return (0);
