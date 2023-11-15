@@ -1,14 +1,10 @@
 #include "main.h"
 
 /**
-<<<<<<< HEAD
- * execute_command - command execution failed  
-=======
+ * execute_command - command execution failed.
  * execute_command - executes a command in a new process.
  *
  * @args: array of strings representing the command and its arguments.
->>>>>>> cb31b729d1ab10dc8c894c24f89ecdb118e75f9d
- *
  */
 void execute_command(char *args[])
 {
