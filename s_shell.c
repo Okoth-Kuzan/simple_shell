@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - entry point for the shell program
+ *
+ * Return: exit status of the shell program.
+ */
+
 int main(void)
 {
 	char *token = NULL;

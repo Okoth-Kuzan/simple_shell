@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * find_command_path - find the full path of an executable command
+ *
+ * @command: the command
+ *
+ * Return: full path of the command if found, or NULL if not found
+ */
+
 char *find_command_path(const char *command)
 {
 	char *path_env = getenv("PATH");
