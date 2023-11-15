@@ -1,12 +1,11 @@
 #include "main.h"
 
 /**
- * execute_command - executes command.
- * args: Command execution failed 
+ * execute_command - executes a command in a new process.
  *
- * Return: 0
+ * @args: array of strings representing the command and its arguments.
+ *
  */
-
 void execute_command(char *args[])
 {
 	char *command_path = find_command_path(args[0]);
