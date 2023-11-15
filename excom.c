@@ -15,7 +15,7 @@ void execute_command(char *args[])
 
 		if (pid < 0)
 		{
-			write(STDERR_FILENO, "Fork failed.\n", 13);
+			perror("Fork failed");
 			_exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)
@@ -23,7 +23,6 @@ void execute_command(char *args[])
 			if (execve(command_path, args, environ) == -1)
 			{
 				perror("execve");
-				write(STDERR_FILENO, "Command execution failed.\n", 26);
 				_exit(EXIT_FAILURE);
 			}
 		}
@@ -33,16 +32,17 @@ void execute_command(char *args[])
 
 			waitpid(pid, &status, 0);
 
-			if (status != 0)
+			if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			{
-				write(STDERR_FILENO, "Command execution failed.\n", 26);
+				fprintf(stderr, "Command execution failed with status: %d\n",
+						WEXITSTATUS(status));
 			}
 		}
 		free(command_path);
 	}
 	else
 	{
-		write(STDERR_FILENO, "Command not found.\n", 19);
+		fprintf(stderr, "Command not found: %s\n", args[0]);
 	}
 }
 
