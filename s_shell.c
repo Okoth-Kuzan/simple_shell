@@ -8,39 +8,39 @@
 
 int main(void)
 {
-	char *path_env = getenv("PATH");
-	char *token = NULL;
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_INPUT_SIZE / 2 + 1];
+	char *token = strtok(input, " ");
 	int i = 0;
 	int should_run = 1;
 
-	fprintf(stderr, "PATH: %s\n", path_env);
-
 	while (should_run)
 	{
-		write(STDOUT_FILENO, "Shell> ", 7);
+		write(STDOUT_FILENO, "($) ", 4);
 
 		if (fgets(input, MAX_INPUT_SIZE, stdin) == NULL)
 		{
 			write(STDOUT_FILENO, "\nExiting the shell.\n", 20);
 			break;
 		}
+
 		input[strcspn(input, "\n")] = 0;
 
-		for (token = strtok(input, " "); token != NULL; token = strtok(NULL, " "))
+		if (strcmp(input, "exit") == 0)
+		{
+			write(STDOUT_FILENO, "Exiting the shell.\n", 19);
+			break;
+		}
+
+		while (token != NULL)
 		{
 			args[i++] = token;
+			token = strtok(NULL, " ");
 		}
 		args[i] = NULL;
 
-		if (args[0] != NULL)
-		{
-			fprintf(stderr, "Executing command: %s\n", args[0]);
-
-			execute_command(args);
-		}
+		execute_command(args);
 	}
-
 	return (0);
 }
+
