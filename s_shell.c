@@ -26,9 +26,8 @@ int main(void)
 		args[i] = NULL;
 
 		execute_command(args);
-
-		execute_builtin(args);
 	}
+
 	return (0);
 }
 

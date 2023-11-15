@@ -16,5 +16,6 @@ int run_shell();
 void execute_command(char *args[]);
 void execute_builtin(char *args[]);
 char *find_command_path(const char *command);
+ssize_t custom_getline(char **lineptr, size_t *n);
 
 #endif
