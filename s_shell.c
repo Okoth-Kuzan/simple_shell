@@ -8,10 +8,10 @@
 
 int main(void)
 {
-	char input[MAX_INPUT_SIZE];
-	char *args[MAX_INPUT_SIZE / 2 + 1];
-	char *token = strtok(input, " ");
 	int i = 0;
+	char input[MAX_INPUT_SIZE];
+	char *token = strtok(input, " ");
+	char *args[MAX_INPUT_SIZE / 2 + 1];
 	int should_run = 1;
 	pid_t pid = fork();
 
@@ -32,7 +32,6 @@ int main(void)
 			write(STDOUT_FILENO, "Exiting the shell.\n", 19);
 			break;
 		}
-
 		while (token != NULL)
 		{
 			args[i++] = token;
@@ -47,7 +46,14 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			if (execve(args[0], args, environ) == -1)
+			char *command_path = find_command_path(args[0]);
+
+			if (command_path == NULL)
+			{
+				fprintf(stderr, "Command not found: %s\n", args[0]);
+				exit(EXIT_FAILURE);
+			}
+			if (execve(command_path, args, environ) == -1)
 			{
 				perror("execve failed");
 				exit(EXIT_FAILURE);
@@ -62,4 +68,3 @@ int main(void)
 	}
 	return (0);
 }
-
